@@ -1,0 +1,31 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+@import url('https://fonts.googleapis.com/css2?family=Alexandria:wght@100..900&family=IBM+Plex+Sans+Arabic:wght@100;200;300;400;500;600;700&family=Rubik:ital,wght@0,300..900;1,300..900&display=swap');
+@layer base {
+  html {
+    font-family: 'Noto Sans Arabic', sans-serif;
+  }
+  
+  body {
+    @apply bg-dark-500 text-dark-100;
+  }
+}
+
+@layer components {
+  .btn {
+    @apply px-4 py-2 rounded-lg font-medium transition-colors;
+  }
+  
+  .btn-primary {
+    @apply bg-primary text-white hover:bg-primary/90;
+  }
+  
+  .btn-secondary {
+    @apply bg-secondary text-white hover:bg-secondary/90;
+  }
+  
+  .input {
+    @apply w-full px-4 py-2 bg-dark-400 border border-dark-300 rounded-lg focus:outline-none focus:border-primary;
+  }
+}
