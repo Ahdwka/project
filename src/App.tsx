@@ -18,8 +18,6 @@ function App() {
       <Router>
         <div className="min-h-screen bg-gray-950 text-white">
           <Navbar />
-          <Navbar />
-          <AdminDashboard />
           <div className="flex">
             <Sidebar />
             <main className="flex-1 p-6">
