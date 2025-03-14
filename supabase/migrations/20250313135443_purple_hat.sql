@@ -17,3 +17,4 @@ SET raw_user_meta_data = jsonb_set(
   '"admin"'
 )
 WHERE email = 'razioxstore@gmail.com';
+WHERE email = 'ahed.wka4g@gmail.com';
