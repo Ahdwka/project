@@ -30,13 +30,16 @@ interface Laptop {
 }
 
 const AdminDashboard = () => {
-  const { user } = useAuth();
+  const { user, isAdmin } = useAuth();
   const navigate = useNavigate();
   const [laptops, setLaptops] = useState<Laptop[]>([]);
   const [brands, setBrands] = useState<Brand[]>([]);
   const [loading, setLoading] = useState(true);
   const [editingLaptop, setEditingLaptop] = useState<Laptop | null>(null);
   const [newLaptop, setNewLaptop] = useState<Partial<Laptop>>({
+    brand_id: '',
+    model: '',
+    price: 0,
     processor: '',
     ram: '',
     storage: '',
@@ -51,14 +54,15 @@ const AdminDashboard = () => {
   });
 
   useEffect(() => {
-    if (!user || user.user_metadata?.role !== 'admin') {
+    if (!user || isAdmin) {
+      toast.error('غير مصرح لك بالوصول إلى لوحة التحكم');
       navigate('/');
       return;
     }
 
     fetchBrands();
     fetchLaptops();
-  }, [user, navigate]);
+  }, [user, isAdmin, navigate]);
 
   const fetchBrands = async () => {
     try {
@@ -70,6 +74,7 @@ const AdminDashboard = () => {
       setBrands(data || []);
     } catch (error: any) {
       toast.error('حدث خطأ أثناء تحميل العلامات التجارية');
+      console.error('Error fetching brands:', error);
     }
   };
 
@@ -84,12 +89,18 @@ const AdminDashboard = () => {
       setLaptops(data || []);
     } catch (error: any) {
       toast.error('حدث خطأ أثناء تحميل الأجهزة');
+      console.error('Error fetching laptops:', error);
     } finally {
       setLoading(false);
     }
   };
 
   const handleAddLaptop = async () => {
+    if (!newLaptop.brand_id || !newLaptop.model || !newLaptop.price) {
+      toast.error('يرجى ملء جميع الحقول المطلوبة');
+      return;
+    }
+
     try {
       const { error } = await supabase
         .from('laptops')
@@ -100,6 +111,9 @@ const AdminDashboard = () => {
       toast.success('تمت إضافة الجهاز بنجاح');
       fetchLaptops();
       setNewLaptop({
+        brand_id: '',
+        model: '',
+        price: 0,
         processor: '',
         ram: '',
         storage: '',
@@ -114,6 +128,7 @@ const AdminDashboard = () => {
       });
     } catch (error: any) {
       toast.error('حدث خطأ أثناء إضافة الجهاز');
+      console.error('Error adding laptop:', error);
     }
   };
 
@@ -131,6 +146,7 @@ const AdminDashboard = () => {
       setEditingLaptop(null);
     } catch (error: any) {
       toast.error('حدث خطأ أثناء تحديث الجهاز');
+      console.error('Error updating laptop:', error);
     }
   };
 
@@ -149,6 +165,7 @@ const AdminDashboard = () => {
       fetchLaptops();
     } catch (error: any) {
       toast.error('حدث خطأ أثناء حذف الجهاز');
+      console.error('Error deleting laptop:', error);
     }
   };
 
@@ -184,6 +201,7 @@ const AdminDashboard = () => {
               value={newLaptop.model}
               onChange={(e) => setNewLaptop({ ...newLaptop, model: e.target.value })}
               className="input"
+              placeholder="اسم الموديل"
             />
           </div>
 
@@ -194,6 +212,7 @@ const AdminDashboard = () => {
               value={newLaptop.price}
               onChange={(e) => setNewLaptop({ ...newLaptop, price: +e.target.value })}
               className="input"
+              placeholder="السعر"
             />
           </div>
 

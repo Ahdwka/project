@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom';
 import { useAuth } from '../contexts/AuthContext';
 import { Laptop2, User, Heart, LogOut, LogIn, Menu } from 'lucide-react';
 import MobileMenu from './MobileMenu';
+import { supabase } from '../lib/supabase';
 
 const Navbar = () => {
   const { user } = useAuth();
@@ -14,7 +15,7 @@ const Navbar = () => {
         <div className="container mx-auto flex items-center justify-between">
           <Link to="/" className="flex items-center gap-2">
             <Laptop2 className="h-8 w-8 text-primary" />
-            <span className="text-2xl font-bold text-primary">رازيو</span>
+            <span className="text-2xl font-bold Alexandria text-primary">رازيو</span>
           </Link>
           
           <div className="flex items-center gap-4">
