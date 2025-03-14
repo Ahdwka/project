@@ -10,7 +10,7 @@ const Sidebar = () => {
   
   const links = [
     { to: '/', icon: Home, label: 'الرئيسية' },
-    { to: '/catalog', icon: Laptop, label: 'الكتالوج' },
+    { to: '/catalog', icon: Laptop, label: 'اللابتوبات' },
     { to: '/about', icon: Info, label: 'من نحن' },
     { to: '/contact', icon: Phone, label: 'اتصل بنا' },
   ];
