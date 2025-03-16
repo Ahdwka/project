@@ -75,14 +75,14 @@ const [message , setmessage] = useState('')
               <textarea onChange={(e) => setmessage( e.target.value)} className="input min-h-[150px]" />
             </div>
             
-            <button onClick={(e)=>{
+            <button onClick= {(e)=>{
               supabase.from('messages').insert({
                 name, email , message
               }).then(() => {
 
                 e.preventDefault()
               })
-            }} className="btn btn-primary w-full">
+            } } className="btn btn-primary w-full">
               إرسال
             </button>
           </form>
