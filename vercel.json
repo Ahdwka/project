@@ -1,9 +1,9 @@
 {
-  "routes": [
-    {
-      "src": "/",
-      "dest": "/"
-    },
-    { "src": "/login", "dest": "/" }
-  ]
-}
+    "routes": [
+      {
+        "src": "/(.*)",
+        "dest": "/index.html",
+        "status": 200
+      }
+    ]
+  }
