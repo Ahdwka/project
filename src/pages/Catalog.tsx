@@ -157,13 +157,13 @@ const Catalog = () => {
               />
               <div className="p-4 md:p-6">
                 <h3 className="text-lg md:text-xl font-bold mb-2 line-clamp-2">
-                  {laptop.brand.name} {laptop.model}
+                  {laptop.brand?.name} {laptop.model}
                 </h3>
                 <div className="space-y-1 md:space-y-2 mb-4 text-dark-200 text-sm md:text-base">
-                  <p>المعالج: {laptop.specs.processor}</p>
-                  <p>الذاكرة: {laptop.specs.ram}</p>
-                  <p>التخزين: {laptop.specs.storage}</p>
-                  <p>كرت الشاشة: {laptop.specs.gpu}</p>
+                  <p>المعالج: {laptop.specs?.processor}</p>
+                  <p>الذاكرة: {laptop.specs?.ram}</p>
+                  <p>التخزين: {laptop.specs?.storage}</p>
+                  <p>كرت الشاشة: {laptop.specs?.gpu}</p>
                 </div>
                 <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-2">
                   <span className="text-lg md:text-xl font-bold text-primary">
