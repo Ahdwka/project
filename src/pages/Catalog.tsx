@@ -1,7 +1,7 @@
-import React, { useState, useEffect } from 'react';
-import { supabase } from '../lib/supabase';
-import { Search, Filter, MessageCircle, Laptop } from 'lucide-react';
-import toast from 'react-hot-toast';
+import React, { useState, useEffect } from "react";
+import { supabase } from "../lib/supabase";
+import { Search, Filter, MessageCircle, Laptop } from "lucide-react";
+import toast from "react-hot-toast";
 
 interface Brand {
   id: string;
@@ -14,13 +14,11 @@ interface Laptop {
   brand_id: string;
   model: string;
   price: number;
-  specs: {
-    processor: string;
-    ram: string;
-    storage: string;
-    display: string;
-    gpu: string;
-  };
+  processor: string;
+  ram: string;
+  storage: string;
+  display: string;
+  gpu: string;
   images: string[];
   brand: Brand;
 }
@@ -29,8 +27,8 @@ const Catalog = () => {
   const [laptops, setLaptops] = useState<Laptop[]>([]);
   const [brands, setBrands] = useState<Brand[]>([]);
   const [loading, setLoading] = useState(true);
-  const [searchTerm, setSearchTerm] = useState('');
-  const [selectedBrand, setSelectedBrand] = useState<string>('');
+  const [searchTerm, setSearchTerm] = useState("");
+  const [selectedBrand, setSelectedBrand] = useState<string>("");
   const [priceRange, setPriceRange] = useState<[number, number]>([0, 100000]);
 
   useEffect(() => {
@@ -40,28 +38,26 @@ const Catalog = () => {
 
   const fetchBrands = async () => {
     try {
-      const { data, error } = await supabase
-        .from('brands')
-        .select('*');
-      
+      const { data, error } = await supabase.from("brands").select("*");
+
       if (error) throw error;
       setBrands(data || []);
     } catch (error: any) {
-      toast.error('حدث خطأ أثناء تحميل العلامات التجارية');
+      toast.error("حدث خطأ أثناء تحميل العلامات التجارية");
     }
   };
 
   const fetchLaptops = async () => {
     try {
       const { data, error } = await supabase
-        .from('laptops')
-        .select('*, brand:brands(*)')
-        .order('created_at', { ascending: false });
-      
+        .from("laptops")
+        .select("*, brand:brands(*)")
+        .order("created_at", { ascending: false });
+
       if (error) throw error;
       setLaptops(data || []);
     } catch (error: any) {
-      toast.error('حدث خطأ أثناء تحميل الأجهزة');
+      toast.error("حدث خطأ أثناء تحميل الأجهزة");
     } finally {
       setLoading(false);
     }
@@ -70,23 +66,28 @@ const Catalog = () => {
   const handleWhatsAppInquiry = (laptop: Laptop) => {
     const message = `مرحباً، أود الاستفسار عن جهاز ${laptop.brand.name} ${laptop.model}
 المواصفات: 
-- المعالج: ${laptop.specs.processor}
-- الذاكرة: ${laptop.specs.ram}
-- التخزين: ${laptop.specs.storage}
-- الشاشة: ${laptop.specs.display}
-- كرت الشاشة: ${laptop.specs.gpu}`;
+- المعالج: ${laptop.processor}
+- الذاكرة: ${laptop.ram}
+- التخزين: ${laptop.storage}
+- الشاشة: ${laptop.display}
+- كرت الشاشة: ${laptop.gpu}`;
 
-    const whatsappNumber = '+963937005789'; // Replace with actual number
+    const whatsappNumber = "+963937005789"; // Replace with actual number
     const encodedMessage = encodeURIComponent(message);
-    window.open(`https://wa.me/${whatsappNumber}?text=${encodedMessage}`, '_blank');
+    window.open(
+      `https://wa.me/${whatsappNumber}?text=${encodedMessage}`,
+      "_blank"
+    );
   };
 
-  const filteredLaptops = laptops.filter(laptop => {
-    const matchesSearch = laptop.model.toLowerCase().includes(searchTerm.toLowerCase()) ||
+  const filteredLaptops = laptops.filter((laptop) => {
+    const matchesSearch =
+      laptop.model.toLowerCase().includes(searchTerm.toLowerCase()) ||
       laptop.brand.name.toLowerCase().includes(searchTerm.toLowerCase());
     const matchesBrand = !selectedBrand || laptop.brand_id === selectedBrand;
-    const matchesPrice = laptop.price >= priceRange[0] && laptop.price <= priceRange[1];
-    
+    const matchesPrice =
+      laptop.price >= priceRange[0] && laptop.price <= priceRange[1];
+
     return matchesSearch && matchesBrand && matchesPrice;
   });
 
@@ -116,8 +117,10 @@ const Catalog = () => {
               className="input"
             >
               <option value="">الكل</option>
-              {brands.map(brand => (
-                <option key={brand.id} value={brand.id}>{brand.name}</option>
+              {brands.map((brand) => (
+                <option key={brand.id} value={brand.id}>
+                  {brand.name}
+                </option>
               ))}
             </select>
           </div>
@@ -128,14 +131,18 @@ const Catalog = () => {
               <input
                 type="number"
                 value={priceRange[0]}
-                onChange={(e) => setPriceRange([+e.target.value, priceRange[1]])}
+                onChange={(e) =>
+                  setPriceRange([+e.target.value, priceRange[1]])
+                }
                 className="input w-1/2"
                 placeholder="من"
               />
               <input
                 type="number"
                 value={priceRange[1]}
-                onChange={(e) => setPriceRange([priceRange[0], +e.target.value])}
+                onChange={(e) =>
+                  setPriceRange([priceRange[0], +e.target.value])
+                }
                 className="input w-1/2"
                 placeholder="إلى"
               />
@@ -148,8 +155,11 @@ const Catalog = () => {
         <div className="text-center py-12">جاري التحميل...</div>
       ) : (
         <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 md:gap-6">
-          {filteredLaptops.map(laptop => (
-            <div key={laptop.id} className="bg-dark-400 rounded-xl overflow-hidden">
+          {filteredLaptops.map((laptop) => (
+            <div
+              key={laptop.id}
+              className="bg-dark-400 rounded-xl overflow-hidden"
+            >
               <img
                 src={laptop.images[0]}
                 alt={`${laptop.brand.name} ${laptop.model}`}
@@ -160,9 +170,11 @@ const Catalog = () => {
                   {laptop.brand.name} {laptop.model}
                 </h3>
                 <div className="space-y-1 md:space-y-2 mb-4 text-dark-200 text-sm md:text-base">
-                  <p>المعالج: {laptop.specs?.processor}</p>
-                  <p>الذاكرة: {laptop.specs?.storage}</p>
-                  <p>كرت الشاشة: {laptop.specs?.gpu}</p>
+                  <p>المعالج: {laptop?.processor}</p>
+                  <p>التخزين: {laptop?.storage}</p>
+                  <p>الذاكرة: {laptop?.ram}</p>
+                  <p>كرت الشاشة: {laptop?.gpu}</p>
+                  <p>الشاشة: {laptop?.display}</p>
                 </div>
                 <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-2">
                   <span className="text-lg md:text-xl font-bold text-primary">
