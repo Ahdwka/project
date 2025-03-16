@@ -83,6 +83,17 @@ const MobileMenu: React.FC<MobileMenuProps> = ({ isOpen, onClose }) => {
               <span>تسجيل دخول</span>
             </Link>
           )}
+          {user ? (
+                null
+                  ) : (
+                    <Link
+                      to="/register"
+                      className="flex items-center gap-3 px-4 py-3 rounded-lg transition-colors hover:bg-dark-300"
+                    >
+                      <LogIn className="h-5 w-5" />
+                      <span>انشاء حساب</span>
+                    </Link>
+                  )}
         </nav>
       </div>
     </div>
