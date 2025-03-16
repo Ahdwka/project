@@ -30,7 +30,7 @@ interface Laptop {
 }
 
 const AdminDashboard = () => {
-  const { user, isAdmin } = useAuth();
+  const { user, profile } = useAuth();
   const navigate = useNavigate();
   const [laptops, setLaptops] = useState<Laptop[]>([]);
   const [brands, setBrands] = useState<Brand[]>([]);
@@ -54,7 +54,7 @@ const AdminDashboard = () => {
   });
 
   useEffect(() => {
-    if (!user || isAdmin) {
+    if (!user || !profile.is_admin) {
       toast.error('غير مصرح لك بالوصول إلى لوحة التحكم');
       navigate('/');
       return;
@@ -62,7 +62,7 @@ const AdminDashboard = () => {
 
     fetchBrands();
     fetchLaptops();
-  }, [user, isAdmin, navigate]);
+  }, [user, profile, navigate]);
 
   const fetchBrands = async () => {
     try {

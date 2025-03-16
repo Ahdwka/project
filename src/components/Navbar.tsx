@@ -6,7 +6,8 @@ import MobileMenu from './MobileMenu';
 import { supabase } from '../lib/supabase';
 
 const Navbar = () => {
-  const { user } = useAuth();
+  const { user, profile
+   } = useAuth();
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
 
   return (
@@ -25,19 +26,21 @@ const Navbar = () => {
                   <Heart className="h-5 w-5" />
                   <span>المفضلة</span>
                 </Link>
-                {user.user_metadata?.role === 'admin' && (
+                {profile.is_admin && (
                   <Link to="/admin" className="hidden md:flex items-center gap-2 hover:text-primary transition-colors">
                     <User className="h-5 w-5" />
                     <span>لوحة التحكم</span>
                   </Link>
                 )}
                 <button 
+                
                   onClick={() => supabase.auth.signOut()} 
                   className="hidden md:flex items-center gap-2 hover:text-primary transition-colors"
                 >
                   <LogOut className="h-5 w-5" />
                   <span>تسجيل خروج</span>
                 </button>
+                
               </>
             ) : (
               <Link to="/login" className="hidden md:flex items-center gap-2 hover:text-primary transition-colors">

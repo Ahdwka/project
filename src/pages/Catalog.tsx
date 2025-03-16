@@ -69,7 +69,7 @@ const Catalog = () => {
 
   const handleWhatsAppInquiry = (laptop: Laptop) => {
     const message = `مرحباً، أود الاستفسار عن جهاز ${laptop.brand.name} ${laptop.model}
-المواصفات:
+المواصفات: 
 - المعالج: ${laptop.specs.processor}
 - الذاكرة: ${laptop.specs.ram}
 - التخزين: ${laptop.specs.storage}
@@ -104,7 +104,7 @@ const Catalog = () => {
                 className="input pl-10"
                 placeholder="ابحث عن جهاز..."
               />
-              <Search className="absolute right-3 top-1/2 -translate-y-1/2 h-5 w-5 text-dark-200" />
+              <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-5 w-5 text-dark-200" />
             </div>
           </div>
 

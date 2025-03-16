@@ -1,5 +1,6 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Phone, MapPin, Mail, MessageCircle } from 'lucide-react';
+import { supabase } from '../lib/supabase';
 
 const Contact = () => {
   const whatsappNumber = '+963937005789'; // Replace with your actual WhatsApp number
@@ -9,7 +10,9 @@ const Contact = () => {
     const encodedMessage = encodeURIComponent(whatsappMessage);
     window.open(`https://wa.me/${whatsappNumber}?text=${encodedMessage}`, '_blank');
   };
-
+const [name , setName] = useState('')
+const [email , setEmail] = useState('')
+const [message , setmessage] = useState('')
   return (
     <div className="container mx-auto px-4 py-8">
       <h1 className="text-4xl font-bold mb-8 text-center">اتصل بنا</h1>
@@ -59,20 +62,24 @@ const Contact = () => {
           <form className="space-y-4">
             <div>
               <label className="block mb-2">الاسم</label>
-              <input type="text" className="input" />
+              <input onChange={(e) => setName( e.target.value)} type="text" className="input" />
             </div>
             
             <div>
               <label className="block mb-2">البريد الإلكتروني</label>
-              <input type="email" className="input" />
+              <input onChange={(e) => setEmail( e.target.value)} type="email" className="input" />
             </div>
             
             <div>
               <label className="block mb-2">الرسالة</label>
-              <textarea className="input min-h-[150px]" />
+              <textarea onChange={(e) => setmessage( e.target.value)} className="input min-h-[150px]" />
             </div>
             
-            <button type="submit" className="btn btn-primary w-full">
+            <button onClick={()=>{
+              supabase.from('messages').insert({
+                name, email , message
+              })
+            }} className="btn btn-primary w-full">
               إرسال
             </button>
           </form>

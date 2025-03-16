@@ -47,13 +47,14 @@ const Login = () => {
                 className="input pl-10"
                 required
               />
-              <Mail className="absolute right-3 top-1/2 -translate-y-1/2 h-5 w-5 text-dark-200" />
+              <Mail className="absolute left-3 top-1/2 -translate-y-1/2 h-5 w-5 text-dark-200" />
             </div>
           </div>
 
           <div>
             <label className="block mb-2">كلمة المرور</label>
-            <div className="relative">
+            <div className="relative" >
+              <Lock className="absolute left-3 top-1/2 -translate-y-1/2 h-5 w-5 text-dark-200" />
               <input
                 type="password"
                 value={password}
@@ -61,7 +62,6 @@ const Login = () => {
                 className="input pl-10"
                 required
               />
-              <Lock className="absolute right-3 top-1/2 -translate-y-1/2 h-5 w-5 text-dark-200" />
             </div>
           </div>
 
